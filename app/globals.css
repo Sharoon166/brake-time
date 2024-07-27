@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scrollbar-width: thin;
+  scrollbar-base-color: transparent;
+}
+
+h1, h2{
+  font-weight: bold;
+}
