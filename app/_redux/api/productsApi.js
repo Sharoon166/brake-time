@@ -12,11 +12,25 @@ const productsApi = createApi({
       query: (id) => `/${id}`,
     }),
     searchProducts: builder.query({
-      query: ({ searchTerm, limit = 5 }) => `/search?q=${searchTerm}&limit=${limit}`,
+      query: ({ searchTerm, limit = 5 }) =>
+        `/search?q=${searchTerm}&limit=${limit}`,
+    }),
+    addNewProduct: builder.mutation({
+      query: (newProduct) => ({
+        url: "/add",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: newProduct,
+      }),
     }),
   }),
 });
 
-export const { useGetAllProductsQuery, useGetProductByIdQuery, useSearchProductsQuery } = productsApi;
+export const {
+  useGetAllProductsQuery,
+  useGetProductByIdQuery,
+  useSearchProductsQuery,
+  useAddNewProductMutation,
+} = productsApi;
 
-export default productsApi
+export default productsApi;

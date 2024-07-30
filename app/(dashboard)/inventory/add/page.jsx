@@ -6,10 +6,17 @@ import { FaPlus } from "react-icons/fa6";
 import { LucideScanBarcode } from "lucide-react";
 import { LuThumbsUp } from "react-icons/lu";
 import { Icon } from "@/app/_components";
-import { Input, Select, Button, DatePicker, SelectItem } from "@nextui-org/react";
+import {
+  Input,
+  Select,
+  Button,
+  DatePicker,
+  SelectItem,
+} from "@nextui-org/react";
 
 export default function AddProduct() {
-  const [barcode, setBarcode] = useState("");
+  const [barcodeBox, setBarcodeBox] = useState("ABC-abc-123");
+  const [barcodePiece, setBarcodePiece] = useState("ABC-abc-123");
   const [droppedImages, setDroppedImages] = useState([]);
 
   const handleDrop = (acceptedFiles) => {
@@ -180,16 +187,16 @@ export default function AddProduct() {
             </div>
 
             <div className="flex flex-col md:flex-row md:items-center gap-2">
-              <label htmlFor="barcode" className="w-32">
-                Barcode
+              <label htmlFor="Box" className="w-32">
+                Barcode Box
               </label>
               <div className="flex flex-1 items-center gap-2">
                 <Input
-                  id="barcode"
-                  name="barcode"
+                  id="barcodeBox"
+                  name="barcodeBox"
                   variant="bordered"
-                  value={barcode}
-                  onChange={(e) => setBarcode(e.target.value)}
+                  value={barcodeBox}
+                  onChange={(e) => setBarcodeBox(e.target.value)}
                   className="flex-1"
                   classNames={{
                     input: "focus:outline-none",
@@ -207,13 +214,44 @@ export default function AddProduct() {
 
             <div className="flex flex-col justify-center items-center">
               <img
-                src={`https://barcode.orcascan.com?type=code128&data=${barcode}&text=${barcode}`}
-                alt={`${barcode} barcode`}
+                src={`https://barcode.orcascan.com?type=code128&data=${barcodeBox}&text=${barcodeBox}`}
+                alt={`${barcodeBox} barcode`}
                 className="h-32"
               />
-              <a href="https://orcascan.com" className="text-xs text-green-500">
-                Barcodes provided by Orca Scan
-              </a>
+            </div>
+
+            <div className="flex flex-col md:flex-row md:items-center gap-2">
+              <label htmlFor="barcode" className="w-32">
+                Barcode Piece
+              </label>
+              <div className="flex flex-1 items-center gap-2">
+                <Input
+                  id="barcode"
+                  name="barcode"
+                  variant="bordered"
+                  value={barcodePiece}
+                  onChange={(e) => setBarcodePiece(e.target.value)}
+                  className="flex-1"
+                  classNames={{
+                    input: "focus:outline-none",
+                    inputWrapper: "shadow-none",
+                  }}
+                />
+                <Button isIconOnly className="bg-primary/20 p-2 rounded-full">
+                  <LucideScanBarcode className="text-primary rounded-full" />
+                </Button>
+                <Button isIconOnly className="p-2 bg-white">
+                  <Icon.Download className="stroke-primary" />
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-center items-center">
+              <img
+                src={`https://barcode.orcascan.com?type=code128&data=${barcodePiece}&text=${barcodePiece}`}
+                alt={`${barcodePiece} barcode`}
+                className="h-32"
+              />
             </div>
 
             <div className="flex justify-end gap-6 flex-wrap">

@@ -13,9 +13,9 @@ import {
 import { LucideScanBarcode } from "lucide-react";
 import { Icon } from "@/app/_components";
 
-
 export default function AddProduct() {
-  const [barcode, setBarcode] = useState("");
+  const [barcodeBox, setBarcodeBox] = useState("ABC-abc-123");
+  const [barcodePiece, setBarcodePiece] = useState("ABC-abc-123");
   const [productImages, setProductImages] = useState([]);
 
   return (
@@ -38,7 +38,7 @@ export default function AddProduct() {
                 height={80}
                 width={80}
                 src="/images/product_sm.png"
-                alt=""
+                alt="Small product image"
               />
 
               {productImages.map((image, index) => (
@@ -67,6 +67,7 @@ export default function AddProduct() {
                   input: "focus:outline-none",
                   inputWrapper: "shadow-none focus:ring-0",
                 }}
+                aria-label="Product name"
               />
             </div>
 
@@ -79,6 +80,7 @@ export default function AddProduct() {
                 name="importDate"
                 variant="bordered"
                 className="flex-1"
+                aria-label="Import Date"
               />
             </div>
 
@@ -93,6 +95,7 @@ export default function AddProduct() {
                 variant="bordered"
                 min={0}
                 className="flex-1"
+                aria-label="Quantity"
               />
             </div>
 
@@ -105,6 +108,7 @@ export default function AddProduct() {
                 name="category"
                 variant="bordered"
                 className="flex-1"
+                aria-label="Category"
               />
             </div>
 
@@ -125,7 +129,8 @@ export default function AddProduct() {
                   { key: "in-stock", value: "In Stock" },
                   { key: "low-stock", value: "Low Stock" },
                   { key: "out-of-stock", value: "Out of Stock" },
-                ]}>
+                ]}
+                aria-label="Status">
                 {(item) => <SelectItem key={item.key}>{item.value}</SelectItem>}
               </Select>
             </div>
@@ -140,6 +145,7 @@ export default function AddProduct() {
                 name="threshold"
                 variant="bordered"
                 className="flex-1"
+                aria-label="Threshold"
               />
             </div>
 
@@ -152,6 +158,7 @@ export default function AddProduct() {
                 name="expiryDate"
                 variant="bordered"
                 className="flex-1"
+                aria-label="Expiry Date"
               />
             </div>
 
@@ -166,30 +173,32 @@ export default function AddProduct() {
                 variant="bordered"
                 min={0}
                 className="flex-1"
+                aria-label="Units"
               />
             </div>
 
             <div className="flex flex-col md:flex-row md:items-center gap-2">
-              <label htmlFor="barcode" className="w-32">
-                Barcode
+              <label htmlFor="barcodeBox" className="w-32">
+                Barcode Box
               </label>
               <div className="flex flex-1 items-center gap-2">
                 <Input
-                  id="barcode"
-                  name="barcode"
+                  id="barcodeBox"
+                  name="barcodeBox"
                   variant="bordered"
-                  value={barcode}
-                  onChange={(e) => setBarcode(e.target.value)}
+                  value={barcodeBox}
+                  onChange={(e) => setBarcodeBox(e.target.value)}
                   className="flex-1"
                   classNames={{
                     input: "focus:outline-none",
                     inputWrapper: "shadow-none",
                   }}
+                  aria-label="Barcode Box"
                 />
-                <Button isIconOnly className="bg-primary/20 p-2 rounded-full">
+                <Button isIconOnly className="bg-primary/20 p-2 rounded-full" aria-label="Scan Barcode Box">
                   <LucideScanBarcode className="text-primary rounded-full" />
                 </Button>
-                <Button isIconOnly className="p-2 bg-white">
+                <Button isIconOnly className="p-2 bg-white" aria-label="Download Barcode Box">
                   <Icon.Download className="stroke-primary" />
                 </Button>
               </div>
@@ -197,20 +206,52 @@ export default function AddProduct() {
 
             <div className="flex flex-col justify-center items-center">
               <img
-                src={`https://barcode.orcascan.com?type=code128&data=${barcode}&text=${barcode}`}
-                alt={`${barcode} barcode`}
+                src={`https://barcode.orcascan.com?type=code128&data=${barcodeBox}&text=${barcodeBox}`}
+                alt={`${barcodeBox} barcode`}
                 className="h-32"
               />
-              <a href="https://orcascan.com" className="text-xs text-green-500">
-                Barcodes provided by Orca Scan
-              </a>
+            </div>
+
+            <div className="flex flex-col md:flex-row md:items-center gap-2">
+              <label htmlFor="barcode" className="w-32">
+                Barcode Piece
+              </label>
+              <div className="flex flex-1 items-center gap-2">
+                <Input
+                  id="barcode"
+                  name="barcode"
+                  variant="bordered"
+                  value={barcodePiece}
+                  onChange={(e) => setBarcodePiece(e.target.value)}
+                  className="flex-1"
+                  classNames={{
+                    input: "focus:outline-none",
+                    inputWrapper: "shadow-none",
+                  }}
+                  aria-label="Barcode Piece"
+                />
+                <Button isIconOnly className="bg-primary/20 p-2 rounded-full" aria-label="Scan Barcode Piece">
+                  <LucideScanBarcode className="text-primary rounded-full" />
+                </Button>
+                <Button isIconOnly className="p-2 bg-white" aria-label="Download Barcode Piece">
+                  <Icon.Download className="stroke-primary" />
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-center items-center">
+              <img
+                src={`https://barcode.orcascan.com?type=code128&data=${barcodePiece}&text=${barcodePiece}`}
+                alt={`${barcodePiece} barcode`}
+                className="h-32"
+              />
             </div>
 
             <div className="flex justify-end gap-6 flex-wrap">
-              <Button color="primary" variant="bordered">
+              <Button color="primary" variant="bordered" aria-label="Discard changes">
                 Discard
               </Button>
-              <Button color="primary">Update Product</Button>
+              <Button color="primary" aria-label="Update Product">Update Product</Button>
             </div>
           </form>
         </div>

@@ -10,7 +10,12 @@ import {
   Button,
   DateRangePicker,
 } from "@nextui-org/react";
-import { Label, OrderOverview, InventoryOverview, TicketOverview } from "@/app/_components";
+import {
+  Label,
+  OrderOverview,
+  InventoryOverview,
+  TicketOverview,
+} from "@/app/_components";
 
 import { LuSearch, LuTrash2 } from "react-icons/lu";
 import {
@@ -23,9 +28,9 @@ import {
 } from "react-icons/fa6";
 
 import { orderDataDashboard } from "@/app/_constants";
+import Link from "next/link";
 
 export default function Dashboard() {
-
   return (
     <div className="w-full flex flex-col lg:flex-row sm:gap-8">
       <div className="w-full sm:rounded-xl flex flex-col sm:gap-6">
@@ -43,11 +48,19 @@ export default function Dashboard() {
               </Select>
 
               <div className="flex items-center flex-wrap gap-2 md:contents">
-                <div id="date-picker-label" className="min-w-max text-xs font-semibold">
+                <div
+                  id="date-picker-label"
+                  className="min-w-max text-xs font-semibold">
                   Compare to
                 </div>
-                  <DateRangePicker aria-labelledby="date-picker-label" variant="bordered" className="flex-1 sm:w-min font-sans text-xs min-w-min md:min-w-max "/>
-                  <Button color="primary" className="text-xs">Export CSV</Button>
+                <DateRangePicker
+                  aria-labelledby="date-picker-label"
+                  variant="bordered"
+                  className="flex-1 sm:w-min font-sans text-xs min-w-min md:min-w-max "
+                />
+                <Button color="primary" className="text-xs">
+                  Export CSV
+                </Button>
               </div>
             </div>
           </div>
@@ -100,8 +113,13 @@ export default function Dashboard() {
                   const isNewOrder = Status == "New Order";
                   return (
                     <tr key={id} className="relative cursor-pointer">
-                      <td>{OrderID}</td>
-                      <td>{Date}</td>
+                      <Link
+                        key={id}
+                        href={`/order/detail`}
+                        className="contents">
+                        <td>{OrderID}</td>
+                        <td>{Date}</td>
+                      </Link>
                       <td className="relative cursor-pointer group">
                         <Popover
                           shouldBlockScroll
@@ -154,17 +172,20 @@ export default function Dashboard() {
                           </PopoverContent>
                         </Popover>
                       </td>
-
-                      <td>{Region}</td>
-                      <td>
-                        <Label message={Status} variant={variant} />
-                      </td>
+                      <Link
+                        key={id}
+                        href={`/order/detail`}
+                        className="contents">
+                        <td>{Region}</td>
+                        <td>
+                          <Label message={Status} variant={variant} />
+                        </td>
+                      </Link>
                       <td className="flex items-center gap-2 justify-center text-gray-300">
                         <button
                           className={`p-2 rounded-full group ${
                             isNewOrder && "bg-green-100 hover:bg-green-400"
                           } transition-colors duration-300`}>
-                            
                           <FaPenToSquare
                             className={`${
                               isNewOrder &&
@@ -228,7 +249,7 @@ export default function Dashboard() {
       </div>
       <div className="flex flex-col sm:gap-6">
         <InventoryOverview vertical />
-        <TicketOverview/>
+        <TicketOverview />
       </div>
     </div>
   );
