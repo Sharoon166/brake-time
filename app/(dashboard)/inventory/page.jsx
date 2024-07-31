@@ -1,4 +1,3 @@
-"use client"
 import Link from "next/link";
 import { Button, Input } from "@nextui-org/react";
 import {
@@ -20,7 +19,7 @@ export default function Inventory() {
   return (
     <div className="sm:space-y-6">
       <InventoryOverview />
-      <div className="px-6 py-8 sm:rounded-xl space-y-6 bg-white text-secondary">
+      <div className="px-6 py-8 sm:rounded-xl sm:shadow-md space-y-6 bg-white text-secondary">
         <div className="flex items-center justify-between flex-wrap gap-3">
           <h2 className="text-xl">All Inventory</h2>
           <div className="flex items-center flex-wrap gap-2 text-sm">

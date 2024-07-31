@@ -5,7 +5,8 @@ import Label from "./Label";
 import OrderOverview from "./OrderOverview";
 import OrderRejectionForm from "./OrderRejectionForm";
 import Icon from "./Icon";
-import TicketOverview from "./TicketOverview"
+import TicketOverview from "./TicketOverview";
+
 export {
     Navbar,
     Sidebar,
@@ -14,5 +15,5 @@ export {
     OrderOverview,
     OrderRejectionForm,
     Icon,
-    TicketOverview
+    TicketOverview,
 }

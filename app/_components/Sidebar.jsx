@@ -1,9 +1,11 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaX } from "react-icons/fa6";
 import Icon from "./Icon";
+import { useState } from "react";
+import { FaChevronDown } from "react-icons/fa6";
 
 const navLinks = [
   {
@@ -17,6 +19,14 @@ const navLinks = [
     name: "Inventory",
     href: "/inventory",
     icon: Icon.Inventory,
+    subItems: [
+      {
+        id: 1,
+        name: "Categories",
+        href: "/inventory/categories",
+        icon: Icon.Categories,
+      },
+    ],
   },
   {
     id: 3,
@@ -28,6 +38,12 @@ const navLinks = [
 
 export default function Sidebar({ isOpen, setIsOpen }) {
   const path = usePathname();
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  const toggleDropdown = (id) => {
+    setOpenDropdown(openDropdown === id ? null : id);
+  };
+
   return (
     <>
       <div
@@ -46,33 +62,62 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           </div>
 
           {navLinks.map((link) => {
-            const { id, name, href, icon: IconComponent } = link;
+            const { id, name, href, icon: IconComponent, subItems } = link;
             const isActive = path == href;
 
             return (
-              <Link
-                key={id}
-                href={href}
-                onClick={() => setIsOpen(false)}
-                className={`w-full flex items-center gap-2 group ${
-                  isActive && "text-primary shadow-lg shadow-gray-100/50"
-                } hover:text-primary rounded-lg px-2 py-2 z`}>
-                <IconComponent
-                  className={`group-hover:stroke-primary ${
-                    isActive ? "stroke-primary" : "stroke-grey"
-                  }`}
-                />
-                <div>{name}</div>
-                {name == "Order" && (
-                  <Image
-                    height={15}
-                    width={15}
-                    src="/icons/caret_down.svg"
-                    alt={`${name} icon`}
-                    className="ml-auto max-md:hidden"
+              <div key={id}>
+                <Link
+                  href={href}
+                  onClick={() => setIsOpen(false)}
+                  className={`w-full flex items-center gap-2 group ${
+                    isActive && "text-primary shadow-lg shadow-gray-100/50"
+                  } hover:text-primary rounded-lg px-2 py-2 z`}>
+                  <IconComponent
+                    className={`group-hover:stroke-primary ${
+                      isActive ? "stroke-primary" : "stroke-grey"
+                    }`}
                   />
+                  <div>{name}</div>
+                  {subItems && (
+                    <div
+                      className="h-full flex-1"
+                      onClick={() => toggleDropdown(id)}>                      
+                      <FaChevronDown
+                        className={`ml-auto font-light align-middle ${openDropdown === id? "rotate-0" : "-rotate-90"} group-hover:text-primary ${
+                          isActive ? "text-primary" : "text-grey"
+                        } transition-all ease-soft-spring duration-250`}
+                      />
+                    </div>
+                  )}
+                </Link>
+                {subItems && openDropdown === id && (
+                  <div className="pl-4">
+                    {subItems.map((subItem) => {
+                      const { id, name, href, icon: IconComponent } = subItem;
+                      const isActive = path == href;
+
+                      return (
+                        <Link
+                          key={id}
+                          href={href}
+                          onClick={() => setIsOpen(false)}
+                          className={`w-full flex items-center gap-2 group ${
+                            isActive &&
+                            "text-primary shadow-lg shadow-gray-100/50"
+                          } hover:text-primary rounded-lg px-2 py-2 z`}>
+                          <IconComponent
+                            className={`group-hover:stroke-primary ${
+                              isActive ? "stroke-primary" : "stroke-grey"
+                            }`}
+                          />
+                          <div>{name}</div>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 )}
-              </Link>
+              </div>
             );
           })}
         </div>
